@@ -1,4 +1,5 @@
 #include <iostream>
+#include "lista.cpp"
 
 using namespace std;
 
@@ -109,7 +110,7 @@ Carro* Busca_Sequencial(Carro* array, int tamanhoArray, string alvo, int proprie
         BuscaCarro* next = NULL;
     };
 
-    BuscaCarro* firstNodeAdress = new BuscaCarro;
+    ListaEncadeada<Carro> *lista = new ListaEncadeada<Carro>();
     
     int count = 0;
     if (propriedade == 0) {
@@ -117,11 +118,7 @@ Carro* Busca_Sequencial(Carro* array, int tamanhoArray, string alvo, int proprie
         {
             if (array[i].placa == alvo)
             {
-                firstNodeAdress->carro = array[i];
-                BuscaCarro* nextNode = new BuscaCarro;
-                nextNode->next = firstNodeAdress;
-                firstNodeAdress = nextNode;
-                count++;
+                lista.Insert_First(array[i]);
             }
         }
     }
@@ -130,11 +127,7 @@ Carro* Busca_Sequencial(Carro* array, int tamanhoArray, string alvo, int proprie
         {
             if (array[i].cor == alvo)
             {
-                firstNodeAdress->carro = array[i];
-                BuscaCarro* nextNode = new BuscaCarro;
-                nextNode->next = firstNodeAdress;
-                firstNodeAdress = nextNode;
-                count++;
+                lista.Insert_First(array[i]);
             }
         }
     }
@@ -143,35 +136,23 @@ Carro* Busca_Sequencial(Carro* array, int tamanhoArray, string alvo, int proprie
         {
             if (array[i].fabricante == alvo)
             {
-                firstNodeAdress->carro = array[i];
-                BuscaCarro* nextNode = new BuscaCarro;
-                nextNode->next = firstNodeAdress;
-                firstNodeAdress = nextNode;
-                count++;
+                lista.Insert_First(array[i]);
             }
         }
     }
-    BuscaCarro* tmp = firstNodeAdress->next;
-    delete(firstNodeAdress);
-    firstNodeAdress = tmp;
 
-    cout << "Total encontrado: " << count << endl;
-    if (count > 0) {
+    cout << "Total encontrado: " << lista.size << endl;
+    if (lista.size > 0) {
+
 
         Carro* tmpArray = new Carro[count];
         for (int i = 0; i < count; i++)
         {
-            tmpArray[i] = firstNodeAdress->carro;
+            tmpArray[i] = lista->firstNode.item;
 
-            BuscaCarro* tmpNodePtr;
-            tmpNodePtr = firstNodeAdress->next;
-
-            delete(firstNodeAdress);
-            if (tmpNodePtr != NULL)
-            {
-                firstNodeAdress = tmpNodePtr;
-            }
+            if (lista->firstNode != NULL) lista.Remove_First();
         }
+        lista.Clear();
         Print_Array(tmpArray, 0, count);
         return tmpArray;
     }
