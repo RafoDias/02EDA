@@ -16,7 +16,7 @@ int main()
     cin >> listSize;
     lista = CriarListaRandomizada<Node>(listSize, 3);
     PrintLista(lista);
-    
+
     cout << "Valor a ser retirado: ";
     cin >> x;
     lista = RemoveNodesComN(x, lista);
@@ -35,7 +35,6 @@ Node* RemoveNodesComN(int n, Node* firstNode)
     {
         node = firstNode->nextNode;
         delete firstNode;
-        firstNode = NULL;
     }
     
     return node;
